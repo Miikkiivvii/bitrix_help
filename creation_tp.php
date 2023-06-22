@@ -225,5 +225,28 @@ foreach ($uniqueHardwareTypes as $hardwareType) {
 // Сохранение информации о добавленных предложениях в файл
 file_put_contents($filePath, serialize($addedOffers));
 
+
+// Отключение товаров 
+$mainIblockId = 27;
+$offerIblockId = 28;
+
+
+$offerNames = [];
+$offerRes = CIBlockElement::GetList([], ['IBLOCK_ID' => $offerIblockId], false, false, ['ID', 'NAME']);
+while ($offer = $offerRes->Fetch()) {
+    $offerNames[] = $offer['NAME'];
+}
+
+
+$mainRes = CIBlockElement::GetList([], ['IBLOCK_ID' => $mainIblockId], false, false, ['ID', 'NAME']);
+while ($main = $mainRes->Fetch()) {
+    $mainName = $main['NAME'];
+
+    
+    if (in_array($mainName, $offerNames)) {
+        $mainElement = new CIBlockElement();
+        $mainElement->Update($main['ID'], ['ACTIVE' => 'N']);
+    }
+}
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php');
 ?>
