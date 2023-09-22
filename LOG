@@ -1,0 +1,12 @@
+		/* LOG */
+		ob_start();
+		print_r($smsResult);
+		$bufferedContent = ob_get_contents();
+		ob_end_clean();
+		$logFilePath = $_SERVER['DOCUMENT_ROOT'] . '/log.txt';
+		$file = fopen($logFilePath, 'w');
+		if ($file) {
+			fwrite($file, $bufferedContent);
+			fclose($file);
+		}
+		/* LOG */
