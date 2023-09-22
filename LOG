@@ -1,6 +1,6 @@
 		/* LOG */
 		ob_start();
-		print_r($smsResult);
+		echo '<pre>'; print_r(); echo "</pre>";
 		$bufferedContent = ob_get_contents();
 		ob_end_clean();
 		$logFilePath = $_SERVER['DOCUMENT_ROOT'] . '/log.txt';
